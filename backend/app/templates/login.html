@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body class="login-body">
+
+<div class="login-overlay">
+
+    <form class="login-box big-login" method="post" action="/login">
+        <h1>WELCOME BACK</h1>
+        <p class="login-sub">Login to continue</p>
+
+        <input type="text" name="username" placeholder="Username or Email" required>
+
+        <!-- ✅ PASSWORD WITH EYE ICON -->
+        <div class="password-wrap">
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <span class="eye-btn" onclick="togglePassword()">Show</span>
+        </div>
+
+        <button type="submit">OK</button>
+
+        <!-- ✅ WORKING LINKS -->
+        <div class="login-links">
+            <a href="/forgot">Forgot password?</a>
+            <a href="/signup">Create new account</a>
+        </div>
+    </form>
+
+</div>
+
+<script>
+function togglePassword() {
+    const pass = document.getElementById("password");
+    if (pass.type === "password") {
+        pass.type = "text";
+    } else {
+        pass.type = "password";
+    }
+}
+</script>
+
+</body>
+</html>

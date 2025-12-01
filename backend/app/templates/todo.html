@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="todo-body">
+
+<div class="top-bar">
+    <a href="/logout" class="logout-btn">Logout</a>
+</div>
+
+<div class="todo-container">
+    <h1>Just Do It</h1>
+
+    <div class="todo-controls">
+        <input type="text" id="taskInput" placeholder="Write your task here...">
+        <button id="addBtn">Add Task</button>
+    </div>
+
+    <h3 id="taskCount">Active Tasks (0)</h3>
+
+    <ul id="taskList"></ul>
+
+    <div class="view-complete-wrap">
+        <a href="/completed" class="view-complete-btn">View Completed Tasks</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    const taskList = document.getElementById("taskList");
+    const taskInput = document.getElementById("taskInput");
+    const taskCount = document.getElementById("taskCount");
+    const addBtn = document.getElementById("addBtn");
+
+    function saveTasks() {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function renderTasks() {
+        taskList.innerHTML = "";
+        tasks.forEach((task, index) => {
+            if (!task.completed) {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <span>${task.text}</span>
+                    <div class="task-buttons">
+                        <button class="icon-btn check-btn" data-index="${index}">✓</button>
+                        <button class="icon-btn cross-btn" data-index="${index}">✕</button>
+                    </div>
+                `;
+                taskList.appendChild(li);
+            }
+        });
+
+        taskCount.innerText = `Active Tasks (${tasks.filter(t => !t.completed).length})`;
+        saveTasks();
+    }
+
+    function addTask() {
+        const text = taskInput.value.trim();
+        if (!text) return;
+        tasks.push({ text, completed: false });
+        taskInput.value = "";
+        renderTasks();
+    }
+
+    addBtn.addEventListener("click", addTask);
+
+    taskInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") addTask();
+    });
+
+    taskList.addEventListener("click", function (e) {
+        const index = e.target.getAttribute("data-index");
+
+        if (e.target.classList.contains("cross-btn")) {
+            tasks.splice(index, 1);
+            renderTasks();
+        }
+
+        if (e.target.classList.contains("check-btn")) {
+            const li = e.target.closest("li");
+            li.classList.add("task-success");
+
+            setTimeout(() => {
+                tasks[index].completed = true;
+                renderTasks();
+            }, 350);
+        }
+    });
+
+    renderTasks();
+});
+</script>
+
+</body>
+</html>

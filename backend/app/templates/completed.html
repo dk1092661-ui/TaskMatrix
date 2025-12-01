@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Completed Tasks</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body class="todo-body">
+
+<div class="todo-container">
+    <h1 class="todo-title">Completed Tasks</h1>
+
+    <ul id="completedList"></ul>
+
+    <div class="view-complete-wrap">
+        <a href="/todo" class="view-complete-btn">Back</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const completedList = document.getElementById("completedList");
+
+    function saveTasks() {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function renderCompleted() {
+        completedList.innerHTML = "";
+
+        if (tasks.length === 0) {
+            completedList.innerHTML = "<p class='empty-text'>No completed tasks</p>";
+            return;
+        }
+
+        tasks.forEach((task, index) => {
+            if (task.completed) {
+                const li = document.createElement("li");
+
+                li.innerHTML = `
+                    <span class="task-text">${task.text}</span>
+                    <div class="task-buttons">
+                        <button class="icon-btn cross-btn" data-index="${index}">Delete</button>
+                    </div>
+                `;
+
+                completedList.appendChild(li);
+            }
+        });
+
+        saveTasks();
+    }
+
+    completedList.addEventListener("click", function (e) {
+        if (e.target.classList.contains("cross-btn")) {
+            const index = e.target.getAttribute("data-index");
+
+            // Smooth remove animation
+            e.target.closest("li").style.opacity = "0";
+            e.target.closest("li").style.transform = "scale(0.9)";
+
+            setTimeout(() => {
+                tasks.splice(index, 1);
+                renderCompleted();
+            }, 250);
+        }
+    });
+
+    renderCompleted();
+});
+</script>
+
+</body>
+</html>
