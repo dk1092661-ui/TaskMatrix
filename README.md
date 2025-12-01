@@ -62,13 +62,6 @@ This project is ideal for:
 ---
 ---
 
-## ⚙️ How to Run Locally
-
-### 1️⃣ Clone the Repository
-
-git clone https://github.com/your-username/TaskMatrix.git
-cd TaskMatrix
-
 ---
 
 ### 2️⃣ Run the Backend (FastAPI)
@@ -130,8 +123,7 @@ npm start
 Md Danish  
 BCA Student | Aspiring Full-Stack Developer  
 
-GitHub:
-https://github.com/your-username
+
 
 ---
 
