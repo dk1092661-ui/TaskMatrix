@@ -60,31 +60,6 @@ This project is ideal for:
 - VS Code
 
 ---
-
-## 📂 Project Structure
-
-TaskMatrix/
-├── backend/
-│   ├── app/
-│   ├── venv/
-│   ├── requirements.txt
-│   └── main.py
-│
-├── frontend/
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
-│
-├── screenshots/
-│   ├── login.png
-│   ├── dashboard.png
-│   ├── add_task.png
-│   └── completed.png
-│
-├── .gitignore
-├── README.md
-└── TaskMatrix.bat
-
 ---
 
 ## ⚙️ How to Run Locally
